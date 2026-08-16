@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Personal design notes - not part of the deliverable
+design-notes/
+SKILL (apple-library).md
+SKILL (ui-library).md

@@ -13,17 +13,49 @@ function BookDetails({ book, onClose }) {
       .finally(() => setLoadingSubjects(false))
   }, [book.key])
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onClose])
+
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose}>Close</button>
-        <h2>{book.title}</h2>
-        <p>{book.author_name?.join(', ')}</p>
-        <p>Editions: {book.edition_count ?? 'N/A'}</p>
-        {loadingSubjects && <p>Loading subjects...</p>}
-        {!loadingSubjects && (
-          <p>Subjects: {subjects.length > 0 ? subjects.slice(0, 8).join(', ') : 'None listed'}</p>
-        )}
+        <div className="modal-handle" />
+
+        <div className="modal-header">
+          <div>
+            <h2 className="modal-title">{book.title}</h2>
+            <p className="modal-author">{book.author_name?.join(', ') || 'Unknown author'}</p>
+          </div>
+          <button className="modal-close" aria-label="Close" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+
+        <div className="modal-section">
+          <p className="modal-section-label">Editions</p>
+          <p className="modal-stat">{book.edition_count ?? 'N/A'}</p>
+        </div>
+
+        <div className="modal-section">
+          <p className="modal-section-label">Subjects</p>
+          {loadingSubjects && <div className="spinner" />}
+          {!loadingSubjects && (
+            subjects.length > 0 ? (
+              <div className="subjects">
+                {subjects.slice(0, 8).map((subject) => (
+                  <span className="subject-chip" key={subject}>{subject}</span>
+                ))}
+              </div>
+            ) : (
+              <p className="modal-stat">None listed</p>
+            )
+          )}
+        </div>
       </div>
     </div>
   )

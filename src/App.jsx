@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import SearchBar from './components/SearchBar'
 import BookList from './components/BookList'
 import BookDetails from './components/BookDetails'
+import ThemeToggle from './components/ThemeToggle'
+import './App.css'
 
 function App() {
   const [query, setQuery] = useState('')
@@ -37,12 +39,48 @@ function App() {
 
   return (
     <div className="app">
-      <SearchBar query={query} onQueryChange={setQuery} onSubmit={handleSubmit} />
+      <header className="app-header">
+        <div className="app-title-row">
+          <h1 className="app-title">Book Explorer</h1>
+          <ThemeToggle />
+        </div>
+        <SearchBar query={query} onQueryChange={setQuery} onSubmit={handleSubmit} />
+      </header>
 
-      {loading && <p>Loading...</p>}
-      {error && <p>Something went wrong: {error}</p>}
-      {!loading && !error && submittedQuery && books.length === 0 && <p>No books found.</p>}
-      {!loading && !error && books.length > 0 && <BookList books={books} onSelect={setSelectedBook} />}
+      <main className="app-main">
+        {loading && (
+          <div className="state">
+            <div className="spinner" />
+          </div>
+        )}
+
+        {error && (
+          <div className="state">
+            <span className="state-icon">⚠️</span>
+            <p className="state-title">Something went wrong</p>
+            <p className="state-subtitle">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && submittedQuery && books.length === 0 && (
+          <div className="state">
+            <span className="state-icon">📚</span>
+            <p className="state-title">No books found.</p>
+          </div>
+        )}
+
+        {!loading && !error && !submittedQuery && (
+          <div className="state">
+            <span className="state-icon">🔍</span>
+            <p className="state-title">Search for a book</p>
+            <p className="state-subtitle">Try a title or author, like "dune".</p>
+          </div>
+        )}
+
+        {!loading && !error && books.length > 0 && (
+          <BookList books={books} onSelect={setSelectedBook} />
+        )}
+      </main>
 
       {selectedBook && <BookDetails book={selectedBook} onClose={() => setSelectedBook(null)} />}
     </div>
