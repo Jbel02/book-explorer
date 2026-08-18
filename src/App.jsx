@@ -3,6 +3,7 @@ import SearchBar from './components/SearchBar'
 import BookList from './components/BookList'
 import BookDetails from './components/BookDetails'
 import ThemeToggle from './components/ThemeToggle'
+import BackToTop from './components/BackToTop'
 import './App.css'
 
 function App() {
@@ -83,6 +84,8 @@ function App() {
       </main>
 
       {selectedBook && <BookDetails book={selectedBook} onClose={() => setSelectedBook(null)} />}
+
+      <BackToTop />
     </div>
   )
 }
