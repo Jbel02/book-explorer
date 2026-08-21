@@ -266,6 +266,57 @@
   margin-top: 2px;
 }
 
+/* ---------- Dashboard / category shelves ---------- */
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.shelf-title {
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .shelf-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .shelf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.shelf-skeleton {
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+  background: var(--fill);
+  animation: skeleton-pulse 1200ms ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-skeleton {
+    animation: none;
+  }
+}
+
 /* ---------- Book details sheet ---------- */
 
 .modal-backdrop {

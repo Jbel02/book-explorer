@@ -4,7 +4,16 @@ import BookList from './components/BookList'
 import BookDetails from './components/BookDetails'
 import ThemeToggle from './components/ThemeToggle'
 import BackToTop from './components/BackToTop'
+import CategoryShelf from './components/CategoryShelf'
 import './App.css'
+
+const CATEGORIES = [
+  { title: 'Fiction', subject: 'fiction' },
+  { title: 'Fantasy', subject: 'fantasy' },
+  { title: 'Mystery', subject: 'mystery' },
+  { title: 'Romance', subject: 'romance' },
+  { title: 'Science Fiction', subject: 'science_fiction' },
+]
 
 function App() {
   const [query, setQuery] = useState('')
@@ -71,10 +80,15 @@ function App() {
         )}
 
         {!loading && !error && !submittedQuery && (
-          <div className="state">
-            <span className="state-icon">🔍</span>
-            <p className="state-title">Search for a book</p>
-            <p className="state-subtitle">Try a title or author, like "dune".</p>
+          <div className="dashboard">
+            {CATEGORIES.map((category) => (
+              <CategoryShelf
+                key={category.subject}
+                title={category.title}
+                subject={category.subject}
+                onSelect={setSelectedBook}
+              />
+            ))}
           </div>
         )}
 

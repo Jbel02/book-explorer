@@ -1,8 +1,8 @@
 import BookCard from './BookCard'
 
-function BookList({ books, onSelect }) {
+function BookList({ books, onSelect, gridClassName = 'book-grid' }) {
   return (
-    <div className="book-grid">
+    <div className={gridClassName}>
       {books.map((book) => (
         <BookCard key={book.key} book={book} onClick={() => onSelect(book)} />
       ))}
